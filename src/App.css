@@ -1,0 +1,34 @@
+.bk{
+    background-color: lightgray;
+}
+
+.prod-card {
+    height: 25vh;
+    display: flex;
+}
+
+.texto {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.texto > div p {
+    display: inline-block;
+    margin: 0 10px 0 0; 
+  }
+
+  .trash {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    text-align: end;
+   
+  }
+
+  .trash p:hover {
+    color: grey;
+    transition: 0.1s;
+    cursor: pointer;
+  }

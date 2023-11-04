@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Poppins:wght@300&family=Raleway:wght@300&display=swap');
+
+.navbar-custom {
+  font-family: 'Poppins', sans-serif;
+ height: 15vh;
+  font-weight: 800;
+  background-color: gray;
+  align-items: center;
+}
+
+
+
+.navbar-custom .navbar-text,
+.navbar-custom .navbar-nav a {
+  color: #fff;
+  font-size: large;
+  margin: 8vh;
+  text-decoration: none;
+  align-items: center;
+
+}
+
+
+
+
+
+.navbar-custom  a:hover {
+  transition: 0.2s;
+  color: #000;
+}
+
