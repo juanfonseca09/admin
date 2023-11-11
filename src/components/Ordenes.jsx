@@ -35,11 +35,10 @@ export const Ordenes = () => {
             await axios.delete("http://localhost:3000/api/orders/" + id, {
             withCredentials: false,
           });
-  
-          Swal.fire('Producto Eliminado', '', 'success');
+          Swal.fire('Orden Eliminada', '', 'success');
         } catch (error) {
           console.error(error);
-          Swal.fire('Error al eliminar el producto', '', 'error');
+          Swal.fire('Error al eliminar orden', '', 'error');
         }
       }
     });

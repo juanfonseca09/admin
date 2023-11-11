@@ -144,9 +144,8 @@ console.log(imageUploadResponse)
       if (!productUploadRequest.ok) {
         throw new Error("Error al cargar el producto.");
       }
-      console.log(productUploadRequest)
       Swal.fire({
-        position: "medium",
+        position: "center",
         icon: "success",
         title: "Producto cargado correctamente!",
         showConfirmButton: false,
@@ -154,13 +153,14 @@ console.log(imageUploadResponse)
       });
     } catch (error) {
       Swal.fire({
-        position: "medium",
+        position: "center",
         icon: "warning",
         title: "Hubo un error al cargar el producto",
         showConfirmButton: false,
         timer: 2000,
       });
     }
+    window.location.reload();
   };
 
   const imageFormGroups = [];
@@ -172,7 +172,6 @@ console.log(imageUploadResponse)
   <Form.Control
     type="file"
     name={`images${i}`}
-    multiple // Habilita la carga múltiple
     onChange={(event) => handleColorChange(i, event)}
   />
 </Form.Group>
@@ -194,6 +193,8 @@ console.log(imageUploadResponse)
                 <option value="fuchsia">Fucsia</option>
                 <option value="pink">Rosa</option>
                 <option value="orange">Naranja</option>
+                <option value="burlywood">Animal Print</option>
+                <option value="purple">Violeta</option>
               </Form.Select>
             </Form.Group>
           </Col>
