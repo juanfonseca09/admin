@@ -151,6 +151,9 @@ console.log(imageUploadResponse)
         showConfirmButton: false,
         timer: 2000,
       });
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
     } catch (error) {
       Swal.fire({
         position: "center",
@@ -159,8 +162,10 @@ console.log(imageUploadResponse)
         showConfirmButton: false,
         timer: 2000,
       });
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
     }
-    window.location.reload();
   };
 
   const imageFormGroups = [];
