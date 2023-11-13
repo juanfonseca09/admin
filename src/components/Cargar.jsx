@@ -107,11 +107,7 @@ export const Cargar = () => {
         });
 
       formData.append("categories", selectedCategories.join(","));
-
       const imageUploadRequest = await axios.post("/products/upload", formData);
-      if (!imageUploadRequest.ok) {
-        throw new Error("Error al subir las imágenes.");
-      }
       const imageUploadResponse = await imageUploadRequest.json();
       console.log(imageUploadResponse)
       const productData = {
@@ -124,9 +120,6 @@ export const Cargar = () => {
       };
       console.log(productData);
       const productUploadRequest = await axios.post("/products", JSON.stringify(productData));
-      if (!productUploadRequest.ok) {
-        throw new Error("Error al cargar el producto.");
-      }
       Swal.fire({
         position: "center",
         icon: "success",
