@@ -148,6 +148,7 @@ export const Cargar = () => {
       // setTimeout(() => {
       //   window.location.reload();
       // }, 2000);
+      console.log(error);
     }
   };
 

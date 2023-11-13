@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'https://billowing-sun-8147.fly.dev/api',
+  baseURL: 'http://localhost:3000/api',
   withCredentials: true,
 });
 
