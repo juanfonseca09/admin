@@ -108,18 +108,16 @@ export const Cargar = () => {
 
       formData.append("categories", selectedCategories.join(","));
       const imageUploadRequest = await axios.post("/products/upload", formData);
-      const imageUploadResponse = await imageUploadRequest.json();
-      console.log(imageUploadResponse)
       const productData = {
         title: form.title.value,
         desc: form.desc.value,
         categories: selectedCategories,
         price: parseFloat(form.price.value),
         inStock: true,
-        images: imageUploadResponse.images,
+        images: imageUploadResponse.data.images,
       };
       console.log(productData);
-      const productUploadRequest = await axios.post("/products", JSON.stringify(productData));
+      await axios.post("/products", JSON.stringify(productData));
       Swal.fire({
         position: "center",
         icon: "success",
