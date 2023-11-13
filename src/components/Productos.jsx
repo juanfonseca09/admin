@@ -61,6 +61,7 @@ useEffect(() => {
                     src={`http://localhost:3000/api/get-image/${product.images[0].url}`}
                     className="img-fluid img-thumbnail"
                     alt=""
+                    crossOrigin="anonymous"
                   />
                   <div className="texto">
                     <div>
