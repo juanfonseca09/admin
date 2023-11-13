@@ -7,17 +7,19 @@ export const Productos = () => {
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
 
-useEffect(() => {
-  const getProducts = async () => {
-    try {
-      const res = await axios.get(`/products?page=${currentPage}&limit=8&new=true`);
-      setProducts(res.data);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-  getProducts();
-}, [currentPage]);
+  useEffect(() => {
+    const getProducts = async () => {
+      try {
+        const res = await axios.get(`/products?page=${currentPage}&limit=8&new=true`);
+        setProducts((prevProducts) => [...prevProducts, ...res.data]);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+  
+    getProducts();
+  }, [currentPage]);
+  
 
 
   const eliminar = async (id) => {
