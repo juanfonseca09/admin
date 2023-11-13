@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Form, Container, Row, Col, Button } from "react-bootstrap";
 import Swal from "sweetalert2";
+import axios from "../axiosInstance";
 
 export const Cargar = () => {
 
@@ -107,20 +108,12 @@ export const Cargar = () => {
 
       formData.append("categories", selectedCategories.join(","));
 
-      const imageUploadRequest = await fetch(
-        "http://localhost:3000/api/products/upload",
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
-
+      const imageUploadRequest = await axios.post("/products/upload", formData);
       if (!imageUploadRequest.ok) {
         throw new Error("Error al subir las imágenes.");
       }
-
       const imageUploadResponse = await imageUploadRequest.json();
-console.log(imageUploadResponse)
+      console.log(imageUploadResponse)
       const productData = {
         title: form.title.value,
         desc: form.desc.value,
@@ -130,17 +123,7 @@ console.log(imageUploadResponse)
         images: imageUploadResponse.images,
       };
       console.log(productData);
-      const productUploadRequest = await fetch(
-        "http://localhost:3000/api/products/",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(productData),
-        }
-      );
-
+      const productUploadRequest = await axios.post("/products", JSON.stringify(productData));
       if (!productUploadRequest.ok) {
         throw new Error("Error al cargar el producto.");
       }
@@ -307,11 +290,6 @@ console.log(imageUploadResponse)
                       type="checkbox"
                       label="Lencería"
                       value="Lencería"
-                    />
-                    <Form.Check
-                      type="checkbox"
-                      label="Preventa Lencería"
-                      value="Preventa Lencería"
                     />
                     <Form.Check
                       type="checkbox"

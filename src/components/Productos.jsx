@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "../axiosInstance";
 import React, { useEffect, useState } from "react";
 import { Card, Container, Row } from "react-bootstrap";
 import Swal from "sweetalert2";
@@ -9,11 +9,7 @@ export const Productos = () => {
   useEffect(() => {
     const getProducts = async () => {
       try {
-        const res = await axios({
-          method: "get",
-          url: "http://localhost:3000/api/products",
-          withCredentials: false,
-        });
+        const res = await axios.get("/products");
         setProducts(res.data);
       } catch (err) {
         console.error(err);
@@ -31,13 +27,7 @@ export const Productos = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          const res = await axios.delete(
-            "http://localhost:3000/api/products/" + id,
-            {
-              withCredentials: false,
-            }
-          );
-
+          const res = await axios.delete("/products/" + id);
           Swal.fire("Producto Eliminado", "", "success");
         } catch (error) {
           console.error(error);
@@ -56,7 +46,7 @@ export const Productos = () => {
               <Card key={product._id} className="mb-2">
                 <Card.Body className="prod-card">
                   <img
-                    src={`http://localhost:3000/api/products/get-image/${product.images[0].url}`}
+                    src={`http://localhost:3000/api/get-image/${product.images[0].url}`}
                     className="img-fluid img-thumbnail"
                     alt=""
                   />
