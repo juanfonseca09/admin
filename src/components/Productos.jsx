@@ -84,8 +84,8 @@ export const Productos = () => {
             ))}
           </div>
         </Row>
-        <Row>
-          <Button className="col-3" onClick={handleNextPage}>Siguiente</Button>
+        <Row className='justify-content-center'>
+          <Button className="col-3" onClick={handleNextPage}>Cargar Más</Button>
         </Row>
       </Container>
     </div>
