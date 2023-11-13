@@ -16,12 +16,9 @@ export const Productos = () => {
         console.error(err);
       }
     };
-  
     getProducts();
   }, [currentPage]);
   
-
-
   const eliminar = async (id) => {
     Swal.fire({
       title: "Eliminar Producto",
@@ -33,7 +30,6 @@ export const Productos = () => {
         try {
           await axios.delete("/products/" + id);
           Swal.fire("Producto Eliminado", "", "success");
-          // Recargar productos después de eliminar
           setCurrentPage(1);
         } catch (error) {
           console.error(error);
@@ -45,10 +41,6 @@ export const Productos = () => {
 
   const handleNextPage = () => {
     setCurrentPage((prevPage) => prevPage + 1);
-  };
-
-  const handlePrevPage = () => {
-    setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
   };
 
   return (
@@ -93,10 +85,7 @@ export const Productos = () => {
           </div>
         </Row>
         <Row>
-          <Button onClick={handlePrevPage} disabled={currentPage === 1}>
-            Anterior
-          </Button>
-          <Button onClick={handleNextPage}>Siguiente</Button>
+          <Button className="col-3" onClick={handleNextPage}>Siguiente</Button>
         </Row>
       </Container>
     </div>
