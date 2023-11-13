@@ -118,7 +118,7 @@ export const Cargar = () => {
         images: imagedta.images,
       };
       console.log(productData);
-      await axios.post("/products", JSON.stringify(productData));
+      await axios.post("/products", productData);
       Swal.fire({
         position: "center",
         icon: "success",
