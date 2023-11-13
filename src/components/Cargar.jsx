@@ -108,13 +108,14 @@ export const Cargar = () => {
 
       formData.append("categories", selectedCategories.join(","));
       const imageUploadRequest = await axios.post("/products/upload", formData);
+      const imagedta = imageUploadRequest.data;
       const productData = {
         title: form.title.value,
         desc: form.desc.value,
         categories: selectedCategories,
         price: parseFloat(form.price.value),
         inStock: true,
-        images: imageUploadResponse.data.images,
+        images: imagedta.images,
       };
       console.log(productData);
       await axios.post("/products", JSON.stringify(productData));
