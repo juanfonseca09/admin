@@ -1,22 +1,24 @@
 import axios from "../axiosInstance";
 import React, { useEffect, useState } from "react";
-import { Card, Container, Row } from "react-bootstrap";
+import { Card, Container, Row, Button } from "react-bootstrap";
 import Swal from "sweetalert2";
 
 export const Productos = () => {
   const [products, setProducts] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
 
-  useEffect(() => {
-    const getProducts = async () => {
-      try {
-        const res = await axios.get("/products");
-        setProducts(res.data);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    getProducts();
-  }, [products]);
+useEffect(() => {
+  const getProducts = async () => {
+    try {
+      const res = await axios.get(`/products?page=${currentPage}&limit=8&new=true`);
+      setProducts(res.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  getProducts();
+}, [currentPage]);
+
 
   const eliminar = async (id) => {
     Swal.fire({
@@ -27,14 +29,24 @@ export const Productos = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          const res = await axios.delete("/products/" + id);
+          await axios.delete("/products/" + id);
           Swal.fire("Producto Eliminado", "", "success");
+          // Recargar productos después de eliminar
+          setCurrentPage(1);
         } catch (error) {
           console.error(error);
           Swal.fire("Error al eliminar el producto", "", "error");
         }
       }
     });
+  };
+
+  const handleNextPage = () => {
+    setCurrentPage((prevPage) => prevPage + 1);
+  };
+
+  const handlePrevPage = () => {
+    setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
   };
 
   return (
@@ -76,6 +88,12 @@ export const Productos = () => {
               </Card>
             ))}
           </div>
+        </Row>
+        <Row>
+          <Button onClick={handlePrevPage} disabled={currentPage === 1}>
+            Anterior
+          </Button>
+          <Button onClick={handleNextPage}>Siguiente</Button>
         </Row>
       </Container>
     </div>
