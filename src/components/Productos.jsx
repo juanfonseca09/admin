@@ -10,7 +10,7 @@ export const Productos = () => {
   useEffect(() => {
     const getProducts = async () => {
       try {
-        const res = await axios.get(`/products?page=${currentPage}&limit=8&new=true`);
+        const res = await axios.get(`/products?page=${currentPage}&limit=8`);
         setProducts((prevProducts) => [...prevProducts, ...res.data]);
       } catch (err) {
         console.error(err);
