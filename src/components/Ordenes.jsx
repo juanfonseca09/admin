@@ -18,21 +18,95 @@ export const Ordenes = () => {
     getOrders();
   }, [orders]);
 
-  const eliminar = async (id) => {
+  const eliminar = async (order) => {
     Swal.fire({
-      title: "Eliminar Orden",
+      title: "Modificar Orden",
       showDenyButton: true,
-      confirmButtonText: "Si",
-      denyButtonText: "Cancelar",
+      showCancelButton: true,
+      denyButtonText: `Eliminar`,
+      confirmButtonText: "Restock",
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.delete("/orders/" + id);
-          Swal.fire("Orden Eliminada", "", "success");
+          for (const product of order.products) {
+            const res = await axios.get(`/products/findtt/${product.title}`);
+            const prod = await axios.get(`/products/find/${res.data.id}`);
+            let sizeIndex = 0;
+            switch (product.size) {
+              case "XS":
+                sizeIndex = 0;
+                break;
+              case "S":
+                sizeIndex = 1;
+                break;
+              case "M":
+                sizeIndex = 2;
+                break;
+              case "L":
+                sizeIndex = 3;
+                break;
+              case "XL":
+                sizeIndex = 4;
+                break;
+              case "75B":
+                sizeIndex = 0;
+                break;
+              case "75C":
+                sizeIndex = 1;
+                break;
+              case "80B":
+                sizeIndex = 2;
+                break;
+              case "80C":
+                sizeIndex = 3;
+                break;
+              case "80D":
+                sizeIndex = 4;
+                break;
+              case "85B":
+                sizeIndex = 5;
+                break;
+              case "85C":
+                sizeIndex = 6;
+                break;
+              case "85D":
+                sizeIndex = 7;
+                break;
+              default:
+                sizeIndex = -1;
+                break;
+            }
+            const sizeQuantity =
+              prod.data.images[product.code].colors[0].sizes[sizeIndex].quantity;
+            const sizeUpd = {
+              sizeIndex: sizeIndex,
+              quantity: sizeQuantity + product.quantity,
+            };
+            await axios.put("/products/" + res.data.id, sizeUpd);
+            await axios.put("/orders/" + order._id, { estatus: "Cancelado" });
+            Swal.fire("Existencias actualizadas!", "", "success");
+          }
         } catch (error) {
-          console.error(error);
-          Swal.fire("Error al eliminar orden", "", "error");
+          console.log(error);
+          Swal.fire("Error al actualizar", "", "error");
         }
+      } else if (result.isDenied) {
+        Swal.fire({
+          title: "Eliminar Orden",
+          showDenyButton: true,
+          confirmButtonText: "Si",
+          denyButtonText: "Cancelar",
+        }).then(async (result) => {
+          if (result.isConfirmed) {
+            try {
+              await axios.delete("/orders/" + order._id);
+              Swal.fire("Orden Eliminada", "", "success");
+            } catch (error) {
+              console.error(error);
+              Swal.fire("Error al eliminar orden", "", "error");
+            }
+          }
+        });
       }
     });
   };
@@ -74,10 +148,12 @@ export const Ordenes = () => {
                           <p className="fw-bold">Precio:</p>
                           <p>${product.price}</p>
                         </div>
-                        <div>
-                          <p className="fw-bold">Color:</p>
-                          <p>{product.color}</p>
-                        </div>
+                        {!product.color.startsWith("C:") && (
+                          <div>
+                            <p className="fw-bold">Color:</p>
+                            <p>{product.color}</p>
+                          </div>
+                        )}
                         <div>
                           <p className="fw-bold">Talle:</p>
                           <p>{product.size}</p>
@@ -107,7 +183,7 @@ export const Ordenes = () => {
                     <div>
                       <p className="fw-bold">Dirección:</p>
                       <p>
-                        {order.address}, {order.city}, {order.region}
+                        {order.address}, {order.city}
                       </p>
                     </div>
                     <div>
@@ -145,8 +221,8 @@ export const Ordenes = () => {
                       <p>{fecha(order.createdAt)}</p>
                     </div>
                   </div>
-                  <div className="trash" onClick={() => eliminar(order._id)}>
-                    <p>ELIMINAR</p>
+                  <div className="trash" onClick={() => eliminar(order)}>
+                    <p>OPCIONES</p>
                   </div>
                 </Card.Body>
               </Card>
