@@ -17,7 +17,7 @@ export const Productos = () => {
       }
     };
     getProducts();
-  }, [currentPage, products]);
+  }, [currentPage]);
   
   const eliminar = async (id) => {
     Swal.fire({
