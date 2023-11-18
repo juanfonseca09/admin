@@ -138,6 +138,7 @@ export const Ordenes = () => {
                         src={`http://localhost:3000/api/get-image/${product.image}`}
                         className="img-fluid img-thumbnail"
                         alt=""
+                        crossOrigin="anonymous"
                       />
                       <div className="texto">
                         <div>
